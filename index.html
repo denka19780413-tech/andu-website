@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>合同会社ANDu — ANDu LLC.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+Antique:wght@300;400;500;700;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&display=swap">
+<style>
+/* ---------- TWEAKABLE TOKENS ---------- */
+:root {
+  /* defaults — mirror EDITMODE block below */
+  --bg: #0a0908;
+  --ink: #ebe6de;
+  --ink-dim: #8a857c;
+  --ink-mute: #4a463f;
+  --line: #2a2825;
+  --accent: #c08552;          /* 銅 */
+  --accent-glow: #e4a76a;
+  --grain-opacity: 0.035;
+}
+
+/* ---------- RESET ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--ink); }
+body {
+  font-family: "Zen Kaku Gothic Antique", "Hiragino Kaku Gothic ProN", sans-serif;
+  font-weight: 400;
+  font-feature-settings: "palt";
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+img { display: block; max-width: 100%; }
+
+/* ---------- GRAIN OVERLAY ---------- */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+/* ---------- TYPO UTIL ---------- */
+.mincho { font-family: "Shippori Mincho", "Hiragino Mincho ProN", serif; font-weight: 500; }
+.serif-en { font-family: "Fraunces", "Shippori Mincho", serif; font-optical-sizing: auto; font-weight: 300; letter-spacing: 0.02em; }
+.mono { font-family: "JetBrains Mono", monospace; letter-spacing: 0.04em; }
+.caps { text-transform: uppercase; letter-spacing: 0.22em; }
+
+/* ---------- LAYOUT ---------- */
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 72px); }
+
+/* ---------- NAV ---------- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 22px clamp(24px, 5vw, 72px);
+  display: flex; align-items: center; justify-content: space-between;
+  mix-blend-mode: difference;
+  color: #fff;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+}
+.nav-logo svg { height: 22px; width: auto; display: block; }
+.nav-logo small {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  padding-left: 12px;
+  border-left: 1px solid currentColor;
+}
+.nav-links {
+  display: flex; gap: 36px;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+.nav-links a {
+  position: relative;
+  padding-bottom: 4px;
+  transition: opacity 0.3s;
+}
+.nav-links a:hover { opacity: 0.5; }
+.nav-links a::before {
+  content: counter(nav, decimal-leading-zero);
+  counter-increment: nav;
+  font-size: 9px;
+  opacity: 0.4;
+  margin-right: 8px;
+}
+.nav-links { counter-reset: nav; }
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 120px 0 80px;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 80% 20%, color-mix(in oklch, var(--accent) 30%, transparent) 0%, transparent 50%),
+    radial-gradient(ellipse at 10% 80%, color-mix(in oklch, var(--accent) 15%, transparent) 0%, transparent 45%);
+  filter: blur(40px);
+  opacity: 0.6;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px);
+  background-size: calc(100% / 12) 100%;
+  opacity: 0.3;
+  z-index: 0;
+}
+.hero-marquee {
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  transform: translateY(-50%);
+  font-family: "Fraunces", serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(80px, 18vw, 300px);
+  line-height: 0.9;
+  white-space: nowrap;
+  color: var(--ink-mute);
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  animation: marquee 40s linear infinite;
+}
+@keyframes marquee {
+  0% { transform: translate(0, -50%); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+.hero-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: clamp(40px, 8vh, 80px);
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+.hero-meta span::before { content: "— "; opacity: 0.5; }
+
+.hero h1 {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 500;
+  font-size: clamp(48px, 8.5vw, 144px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 48px;
+}
+.hero h1 .row { display: block; overflow: hidden; }
+.hero h1 .row > span {
+  display: inline-block;
+  animation: rise 1.2s cubic-bezier(.2,.8,.2,1) both;
+}
+.hero h1 .row:nth-child(2) > span { animation-delay: 0.15s; }
+.hero h1 .row:nth-child(3) > span { animation-delay: 0.3s; }
+@keyframes rise {
+  from { transform: translateY(110%); }
+  to   { transform: translateY(0); }
+}
+.hero h1 em {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent);
+}
+.hero-sub {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.hero-sub p {
+  max-width: 460px;
+  font-size: 14px;
+  line-height: 2;
+  color: var(--ink-dim);
+}
+.hero-scroll {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-scroll::after {
+  content: "";
+  width: 48px; height: 1px;
+  background: var(--accent);
+  animation: scroll-line 2s ease-in-out infinite;
+  transform-origin: left;
+}
+@keyframes scroll-line {
+  0%, 100% { transform: scaleX(0.3); }
+  50% { transform: scaleX(1); }
+}
+
+/* ---------- SECTION HEADER ---------- */
+.section {
+  padding: clamp(100px, 16vh, 180px) 0;
+  position: relative;
+}
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+  margin-bottom: clamp(60px, 10vh, 120px);
+  align-items: baseline;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+.section-num {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+}
+.section-num::before {
+  content: "§ ";
+  opacity: 0.6;
+}
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  display: block;
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 500;
+  font-size: clamp(36px, 5.5vw, 80px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.section-title em {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent);
+}
+@media (max-width: 720px) {
+  .section-head { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ---------- PHILOSOPHY ---------- */
+.philosophy {
+  background: linear-gradient(180deg, transparent, color-mix(in oklch, var(--accent) 3%, transparent), transparent);
+}
+.phi-quote {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 400;
+  font-size: clamp(24px, 3.5vw, 44px);
+  line-height: 1.8;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: left;
+}
+.phi-quote em {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  color: var(--accent);
+}
+.phi-quote .mark {
+  display: inline-block;
+  padding: 0 0.2em;
+  background: linear-gradient(transparent 65%, color-mix(in oklch, var(--accent) 30%, transparent) 65%);
+}
+.phi-meta {
+  max-width: 1000px;
+  margin: 60px auto 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- SERVICES ---------- */
+.services-list { display: flex; flex-direction: column; }
+.service {
+  display: grid;
+  grid-template-columns: 80px 1fr 1.2fr 1fr;
+  gap: 48px;
+  padding: 48px 0;
+  border-top: 1px solid var(--line);
+  align-items: start;
+  position: relative;
+  transition: padding 0.6s cubic-bezier(.2,.8,.2,1);
+  cursor: pointer;
+}
+.service:last-child { border-bottom: 1px solid var(--line); }
+.service::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.8s cubic-bezier(.2,.8,.2,1);
+}
+.service:hover::before { width: 100%; }
+.service:hover { padding-left: 24px; padding-right: 24px; }
+
+.service-num {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 28px;
+  color: var(--accent);
+}
+.service-title h3 {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 500;
+  font-size: clamp(28px, 3.5vw, 42px);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.service-title .en {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+.service-desc {
+  font-size: 14px;
+  line-height: 2;
+  color: var(--ink-dim);
+}
+.service-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.service-tags span::before {
+  content: "◦ ";
+  color: var(--accent);
+  margin-right: 6px;
+}
+@media (max-width: 900px) {
+  .service {
+    grid-template-columns: 60px 1fr;
+    gap: 16px 32px;
+  }
+  .service-desc, .service-tags { grid-column: 2; }
+}
+
+/* ---------- COMPANY ---------- */
+.company {
+  background: #050403;
+  padding: clamp(100px, 16vh, 180px) 0;
+  position: relative;
+  overflow: hidden;
+}
+.company::before {
+  content: "ANDu";
+  position: absolute;
+  bottom: -80px;
+  right: -40px;
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(200px, 30vw, 520px);
+  color: var(--ink-mute);
+  opacity: 0.35;
+  line-height: 0.8;
+  pointer-events: none;
+  z-index: 0;
+}
+.company-inner { position: relative; z-index: 2; }
+.company-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+}
+.company-info dl {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  border-top: 1px solid var(--line);
+}
+.company-info dt,
+.company-info dd {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+}
+.company-info dt {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  padding-top: 28px;
+}
+.company-info dd {
+  font-family: "Shippori Mincho", serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+.company-info dd em {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 300;
+}
+.company-blurb {
+  padding: 48px;
+  border: 1px solid var(--line);
+  background: color-mix(in oklch, var(--ink) 2%, transparent);
+  backdrop-filter: blur(8px);
+  align-self: start;
+  position: sticky;
+  top: 100px;
+}
+.company-blurb .label {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.company-blurb .label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.company-blurb h4 {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+.company-blurb p {
+  font-size: 13px;
+  line-height: 2;
+  color: var(--ink-dim);
+}
+.company-blurb .sig {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.company-blurb .sig strong {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  color: var(--ink);
+}
+@media (max-width: 900px) {
+  .company-grid { grid-template-columns: 1fr; gap: 40px; }
+  .company-blurb { position: static; padding: 32px; }
+  .company-info dl { grid-template-columns: 120px 1fr; }
+}
+
+/* ---------- WORKS ---------- */
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.work {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+.work-thumb {
+  aspect-ratio: 4/5;
+  background: #1a1815;
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.8s cubic-bezier(.2,.8,.2,1);
+}
+.work:hover .work-thumb { transform: scale(0.97); }
+.work-thumb svg { width: 100%; height: 100%; display: block; }
+.work-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 16px;
+  gap: 16px;
+}
+.work-meta .tag {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.work-meta .num {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+.work-title {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+.work.w-a { grid-column: 1 / span 5; }
+.work.w-b { grid-column: 6 / span 4; margin-top: 80px; }
+.work.w-c { grid-column: 10 / span 3; margin-top: 160px; }
+.work.w-d { grid-column: 1 / span 3; margin-top: 40px; }
+.work.w-e { grid-column: 4 / span 4; }
+.work.w-f { grid-column: 8 / span 5; margin-top: 60px; }
+@media (max-width: 900px) {
+  .works-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .work.w-a, .work.w-b, .work.w-c,
+  .work.w-d, .work.w-e, .work.w-f { grid-column: auto; margin-top: 0; }
+}
+
+/* ---------- CONTACT ---------- */
+.contact {
+  padding: clamp(120px, 20vh, 220px) 0;
+  text-align: center;
+  position: relative;
+}
+.contact-label {
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 32px;
+}
+.contact h2 {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 500;
+  font-size: clamp(40px, 7vw, 112px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 48px;
+}
+.contact h2 em {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent);
+}
+.contact-email {
+  display: inline-block;
+  font-family: "Fraunces", serif;
+  font-weight: 300;
+  font-size: clamp(24px, 3.5vw, 44px);
+  letter-spacing: 0.02em;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--accent);
+  transition: letter-spacing 0.4s;
+}
+.contact-email:hover { letter-spacing: 0.08em; }
+
+.contact-side {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: left top;
+  left: 24px;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  max-width: 900px;
+  margin: 80px auto 0;
+  text-align: left;
+  padding-top: 48px;
+  border-top: 1px solid var(--line);
+}
+.contact-grid .item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.contact-grid .item .l {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.contact-grid .item .v {
+  font-family: "Shippori Mincho", serif;
+  font-size: 16px;
+}
+.contact-grid .item .v em {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 300;
+}
+@media (max-width: 720px) {
+  .contact-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 48px 0;
+}
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.foot .logo {
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--ink);
+}
+
+/* ---------- REVEAL ---------- */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ---------- TWEAKS PANEL ---------- */
+#tweaks {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  width: 280px;
+  background: rgba(10,9,8,0.92);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 20px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+#tweaks.on { display: block; }
+#tweaks h5 {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+}
+.tweak-row { margin-bottom: 14px; }
+.tweak-row label {
+  display: block;
+  color: var(--ink-dim);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 6px;
+}
+.tweak-swatches { display: flex; gap: 6px; flex-wrap: wrap; }
+.tweak-sw {
+  width: 28px; height: 28px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  position: relative;
+}
+.tweak-sw.active { outline: 1px solid var(--ink); outline-offset: 2px; }
+.tweak-row input[type=range] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+.tweak-row select {
+  width: 100%;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 6px 8px;
+  font-family: inherit;
+  font-size: 11px;
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <a href="#top" class="nav-logo" aria-label="ANDu LLC.">
+    <svg viewBox="0 0 180 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- A -->
+      <path d="M4 38 L16 6 L28 38 M9 28 L23 28" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+      <!-- N -->
+      <path d="M36 38 L36 6 L56 38 L56 6" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+      <!-- D -->
+      <path d="M64 6 L64 38 L76 38 C84 38 88 32 88 22 C88 12 84 6 76 6 Z" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+      <!-- u (italic, accent) -->
+      <path d="M104 16 L99 38 C98 41 100 42 103 42 C108 42 112 39 115 32 L118 16 M118 16 L113 38 C113 41 115 42 118 42" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- ampersand glyph -->
+      <circle cx="136" cy="22" r="1.5" fill="var(--accent)"/>
+    </svg>
+    <small>LLC.</small>
+  </a>
+  <div class="nav-links">
+    <a href="#philosophy">Philosophy</a>
+    <a href="#services">Services</a>
+    <a href="#works">Selected</a>
+    <a href="#company">Company</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-marquee">Build &middot; Share &middot; Deliver &middot; Build &middot; Share &middot; Deliver &middot; </div>
+  <div class="wrap hero-inner">
+    <div class="hero-meta">
+      <span>ANDu LLC. / Est. 2026</span>
+      <span>Ayase, Kanagawa, JP</span>
+      <span class="mono">N 35.43° / E 139.43°</span>
+    </div>
+    <h1>
+      <span class="row"><span>手と、言葉と、</span></span>
+      <span class="row"><span>届ける<em>もの</em>。</span></span>
+    </h1>
+    <div class="hero-sub">
+      <p>
+        作ること、伝えること、届けること。<br>
+        三つの事業を束ねる小さな会社。<br>
+        丁寧に、そして確かに。
+      </p>
+      <div class="hero-scroll">Scroll</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHILOSOPHY ============ -->
+<section class="section philosophy" id="philosophy">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-num">01 &mdash; Philosophy</div>
+      </div>
+      <div>
+        <span class="section-label">私たちについて</span>
+        <h2 class="section-title">ひとつの<em>"and"</em>が、<br>暮らしの輪郭を描く。</h2>
+      </div>
+    </div>
+    <div class="phi-quote reveal">
+      ANDu(エンドユー) は、<em>"&amp;"</em>から始まる名前です。<br>
+      ものづくりと商い、現場と言葉。<br>
+      ひとつのことに<span class="mark">こだわらず</span>、<br>
+      しかしどの仕事にも、同じ <em>丁寧さ</em> で向き合う。<br>
+      それが、私たちの小さな約束です。
+    </div>
+    <div class="phi-meta reveal">
+      <span>— Craft, Commerce &amp; Voice</span>
+      <span class="mono">EST. 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-num">02 &mdash; Services</div>
+      </div>
+      <div>
+        <span class="section-label">事業内容</span>
+        <h2 class="section-title">三つの柱、<br>ひとつの<em>姿勢</em>。</h2>
+      </div>
+    </div>
+
+    <div class="services-list">
+      <article class="service reveal">
+        <div class="service-num">01</div>
+        <div class="service-title">
+          <h3>伝える、書く。</h3>
+          <div class="en">&mdash; Writing &amp; Media</div>
+        </div>
+        <div class="service-desc">
+          日々の気づきや暮らしの視点を、ことばに変えて届ける。読む人のそばに寄り添うブログメディアを運営しています。
+        </div>
+        <div class="service-tags">
+          <span>Blog Operation</span>
+          <span>Editorial</span>
+          <span>Media</span>
+        </div>
+      </article>
+
+      <article class="service reveal">
+        <div class="service-num">02</div>
+        <div class="service-title">
+          <h3>選ぶ、届ける。</h3>
+          <div class="en">&mdash; Curated Commerce</div>
+        </div>
+        <div class="service-desc">
+          日々を少しだけ豊かにしてくれる、そんなものを選んで届ける物販事業。ひとつひとつの商品に、選んだ理由があります。
+        </div>
+        <div class="service-tags">
+          <span>Products</span>
+          <span>Curation</span>
+          <span>Delivery</span>
+        </div>
+      </article>
+
+      <article class="service reveal">
+        <div class="service-num">03</div>
+        <div class="service-title">
+          <h3>作る、残す。</h3>
+          <div class="en">&mdash; On-site Craft</div>
+        </div>
+        <div class="service-desc">
+          手と道具を使い、かたちに残る仕事を。現場に立ち、丁寧に、確実に。頼まれたその一件を、自分ごととして仕上げます。
+        </div>
+        <div class="service-tags">
+          <span>On-site Work</span>
+          <span>Handcraft</span>
+          <span>Reliability</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORKS ============ -->
+<section class="section" id="works">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-num">03 &mdash; Selected</div>
+      </div>
+      <div>
+        <span class="section-label">手がけてきたもの</span>
+        <h2 class="section-title">日々の、<br><em>断片</em>から。</h2>
+      </div>
+    </div>
+
+    <div class="works-grid">
+      <article class="work w-a reveal">
+        <div class="work-thumb">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="var(--accent)" stop-opacity="0.6"/>
+                <stop offset="1" stop-color="#1a1815" stop-opacity="1"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="500" fill="#1a1815"/>
+            <rect x="40" y="40" width="320" height="420" fill="url(#g1)"/>
+            <text x="40" y="440" font-family="Fraunces, serif" font-style="italic" font-size="64" fill="var(--ink)" opacity="0.9">essay</text>
+            <text x="40" y="80" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--ink)" opacity="0.6" letter-spacing="2">— 001</text>
+          </svg>
+        </div>
+        <div class="work-meta">
+          <span class="tag">Blog / Essay</span>
+          <span class="num">№ 01</span>
+        </div>
+        <div class="work-title">朝の景色と、昨日の残り火</div>
+      </article>
+
+      <article class="work w-b reveal">
+        <div class="work-thumb">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="500" fill="#141210"/>
+            <circle cx="200" cy="220" r="140" fill="none" stroke="var(--accent)" stroke-width="1" opacity="0.5"/>
+            <circle cx="200" cy="220" r="90" fill="none" stroke="var(--accent)" stroke-width="1" opacity="0.7"/>
+            <circle cx="200" cy="220" r="40" fill="var(--accent)" opacity="0.9"/>
+            <rect x="40" y="420" width="60" height="1" fill="var(--ink)" opacity="0.5"/>
+            <text x="40" y="450" font-family="Shippori Mincho, serif" font-size="16" fill="var(--ink)" opacity="0.8">器・小さな道具</text>
+          </svg>
+        </div>
+        <div class="work-meta">
+          <span class="tag">Product</span>
+          <span class="num">№ 02</span>
+        </div>
+        <div class="work-title">日々の道具、小さな選びもの</div>
+      </article>
+
+      <article class="work w-c reveal">
+        <div class="work-thumb">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="500" fill="#0e0c0a"/>
+            <g stroke="var(--ink)" stroke-width="1" opacity="0.25">
+              <line x1="0" y1="100" x2="400" y2="100"/>
+              <line x1="0" y1="200" x2="400" y2="200"/>
+              <line x1="0" y1="300" x2="400" y2="300"/>
+              <line x1="0" y1="400" x2="400" y2="400"/>
+            </g>
+            <rect x="60" y="140" width="280" height="220" fill="var(--accent)" opacity="0.15" stroke="var(--accent)"/>
+            <text x="60" y="100" font-family="Fraunces, serif" font-style="italic" font-size="120" fill="var(--ink)" opacity="0.9">&amp;</text>
+          </svg>
+        </div>
+        <div class="work-meta">
+          <span class="tag">On-site</span>
+          <span class="num">№ 03</span>
+        </div>
+        <div class="work-title">かたちに残る仕事</div>
+      </article>
+
+      <article class="work w-d reveal">
+        <div class="work-thumb">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="500" fill="#1a1815"/>
+            <path d="M0 350 Q 100 280, 200 330 T 400 300 L 400 500 L 0 500 Z" fill="var(--accent)" opacity="0.3"/>
+            <path d="M0 380 Q 100 320, 200 370 T 400 340 L 400 500 L 0 500 Z" fill="var(--accent)" opacity="0.5"/>
+            <text x="30" y="60" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink)" opacity="0.6" letter-spacing="2">FIELD NOTES</text>
+          </svg>
+        </div>
+        <div class="work-meta">
+          <span class="tag">Blog / Field</span>
+          <span class="num">№ 04</span>
+        </div>
+        <div class="work-title">綾瀬、ある午後の記録</div>
+      </article>
+
+      <article class="work w-e reveal">
+        <div class="work-thumb">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="500" fill="#100e0c"/>
+            <g opacity="0.8">
+              <rect x="120" y="120" width="70" height="260" fill="none" stroke="var(--accent)"/>
+              <rect x="210" y="160" width="70" height="220" fill="var(--accent)" opacity="0.3"/>
+              <rect x="210" y="160" width="70" height="220" fill="none" stroke="var(--accent)"/>
+            </g>
+            <text x="30" y="470" font-family="Shippori Mincho, serif" font-size="14" fill="var(--ink)" opacity="0.7">— 選びもの</text>
+          </svg>
+        </div>
+        <div class="work-meta">
+          <span class="tag">Product</span>
+          <span class="num">№ 05</span>
+        </div>
+        <div class="work-title">暮らしの、ちいさな発見</div>
+      </article>
+
+      <article class="work w-f reveal">
+        <div class="work-thumb">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="500" fill="#0c0a08"/>
+            <g stroke="var(--ink)" stroke-width="0.5" opacity="0.3" fill="none">
+              <path d="M0 250 L 400 250"/>
+              <path d="M200 0 L 200 500"/>
+            </g>
+            <circle cx="200" cy="250" r="120" fill="none" stroke="var(--accent)" stroke-width="0.8"/>
+            <circle cx="200" cy="250" r="80" fill="none" stroke="var(--accent)" stroke-width="0.5" opacity="0.6"/>
+            <circle cx="200" cy="250" r="40" fill="var(--accent)" opacity="0.8"/>
+            <text x="30" y="60" font-family="Fraunces, serif" font-style="italic" font-size="28" fill="var(--ink)" opacity="0.8">on-site.</text>
+          </svg>
+        </div>
+        <div class="work-meta">
+          <span class="tag">On-site / Record</span>
+          <span class="num">№ 06</span>
+        </div>
+        <div class="work-title">手を動かす、という誠実さ</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPANY ============ -->
+<section class="section company" id="company">
+  <div class="wrap company-inner">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-num">04 &mdash; Company</div>
+      </div>
+      <div>
+        <span class="section-label">会社概要</span>
+        <h2 class="section-title">小さく、<br><em>確かな</em>会社。</h2>
+      </div>
+    </div>
+
+    <div class="company-grid">
+      <div class="company-info reveal">
+        <dl>
+          <dt>Name</dt>
+          <dd>合同会社ANDu<br><em>ANDu LLC.</em></dd>
+
+          <dt>Founded</dt>
+          <dd>2026<em> / May</em></dd>
+
+          <dt>Representative</dt>
+          <dd>安藤 直<em> / あんどう なお</em></dd>
+
+          <dt>Location</dt>
+          <dd>〒252-1107<br>神奈川県綾瀬市深谷中5-10-28<em><br>Ayase, Kanagawa</em></dd>
+
+          <dt>Tel</dt>
+          <dd>0467-91-1642</dd>
+
+          <dt>Email</dt>
+          <dd style="font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:16px;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ce8f808abbe0a9a1aaa1fcfefcf88ea9a3afa7a2e0ada1a3">[email&#160;protected]</a></dd>
+
+          <dt>Business</dt>
+          <dd>ブログ運営<br>物販<br>現場作業</dd>
+        </dl>
+      </div>
+
+      <aside class="company-blurb reveal">
+        <div class="label">Message &mdash; 代表より</div>
+        <h4>ひとつひとつ、<br>丁寧に。</h4>
+        <p>
+          大きな会社にしたいわけではありません。ただ、頼まれたこと、手がけたことに、ちゃんと向き合える会社でありたい。書くことも、届けることも、作ることも。根っこにあるのは同じ気持ちです。
+        </p>
+        <p style="margin-top:16px;">
+          地に足をつけて、ひとつずつ。それが ANDu のやり方です。
+        </p>
+        <div class="sig">
+          <span>Representative</span>
+          <strong>安藤 直</strong>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section contact" id="contact">
+  <div class="contact-side">&mdash; Get in touch</div>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="contact-label">05 &mdash; Contact</div>
+      <h2>お気軽に、<br><em>ご連絡</em>ください。</h2>
+      <a class="contact-email" href="/cdn-cgi/l/email-protection#3879767c4d165f575c570a080a0e785f55595154165b5755"><span class="__cf_email__" data-cfemail="4c0d020839622b2328237e7c7e7a0c2b212d2520622f2321">[email&#160;protected]</span></a>
+      <div class="contact-grid">
+        <div class="item">
+          <span class="l">Tel</span>
+          <span class="v">0467-91-1642<br><em>Mon &mdash; Fri</em></span>
+        </div>
+        <div class="item">
+          <span class="l">Location</span>
+          <span class="v">〒252-1107<br>神奈川県綾瀬市<br>深谷中5-10-28</span>
+        </div>
+        <div class="item">
+          <span class="l">Representative</span>
+          <span class="v">安藤 直<br><em>Ando Nao</em></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap foot">
+    <div class="logo">AND<em style="color:var(--accent);">u</em></div>
+    <div>&copy; 2026 ANDu LLC. All rights reserved.</div>
+    <div class="mono">Ayase / Kanagawa / JP</div>
+  </div>
+</footer>
+
+<!-- ============ TWEAKS ============ -->
+<div id="tweaks">
+  <h5><span>Tweaks</span><span style="color:var(--ink-dim);">ANDu</span></h5>
+
+  <div class="tweak-row">
+    <label>Accent</label>
+    <div class="tweak-swatches" id="sw-accent">
+      <button class="tweak-sw" data-val="copper" data-accent="#c08552" data-glow="#e4a76a" style="background:#c08552;"></button>
+      <button class="tweak-sw" data-val="gold" data-accent="#c9a96a" data-glow="#e7cf95" style="background:#c9a96a;"></button>
+      <button class="tweak-sw" data-val="crimson" data-accent="#a6352e" data-glow="#d65046" style="background:#a6352e;"></button>
+      <button class="tweak-sw" data-val="sage" data-accent="#7a8b6a" data-glow="#a6b896" style="background:#7a8b6a;"></button>
+      <button class="tweak-sw" data-val="mono" data-accent="#ebe6de" data-glow="#ffffff" style="background:#ebe6de;"></button>
+    </div>
+  </div>
+
+  <div class="tweak-row">
+    <label>Background</label>
+    <div class="tweak-swatches" id="sw-bg">
+      <button class="tweak-sw" data-val="night" data-bg="#0a0908" data-ink="#ebe6de" style="background:#0a0908; border-color:#2a2825;"></button>
+      <button class="tweak-sw" data-val="ink" data-bg="#141210" data-ink="#ebe6de" style="background:#141210; border-color:#3a3835;"></button>
+      <button class="tweak-sw" data-val="midnight" data-bg="#0c0d12" data-ink="#e6e6ea" style="background:#0c0d12; border-color:#2a2b30;"></button>
+      <button class="tweak-sw" data-val="cream" data-bg="#f5f1ea" data-ink="#1a1815" style="background:#f5f1ea; border-color:#d0cac0;"></button>
+    </div>
+  </div>
+
+  <div class="tweak-row">
+    <label>Grain <span id="grain-val" style="float:right;color:var(--ink-dim);">0.035</span></label>
+    <input type="range" id="grain" min="0" max="0.12" step="0.005" value="0.035">
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
+/* ---------- tweak defaults (persisted) ---------- */
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "copper",
+  "bg": "night",
+  "grain": 0.04
+}/*EDITMODE-END*/;
+
+let tweaks = { ...TWEAK_DEFAULTS };
+
+const ACCENT_MAP = {
+  copper:  { accent: "#c08552", glow: "#e4a76a" },
+  gold:    { accent: "#c9a96a", glow: "#e7cf95" },
+  crimson: { accent: "#a6352e", glow: "#d65046" },
+  sage:    { accent: "#7a8b6a", glow: "#a6b896" },
+  mono:    { accent: "#ebe6de", glow: "#ffffff" },
+};
+const BG_MAP = {
+  night:    { bg: "#0a0908", ink: "#ebe6de", dim: "#8a857c", mute: "#4a463f", line: "#2a2825", co: "#050403" },
+  ink:      { bg: "#141210", ink: "#ebe6de", dim: "#8a857c", mute: "#55504a", line: "#3a3835", co: "#0d0b09" },
+  midnight: { bg: "#0c0d12", ink: "#e6e6ea", dim: "#878894", mute: "#4a4c56", line: "#2a2b34", co: "#07080b" },
+  cream:    { bg: "#f5f1ea", ink: "#1a1815", dim: "#6a6560", mute: "#b8b0a4", line: "#d0cac0", co: "#ede8df" },
+};
+
+function applyTweaks() {
+  const a = ACCENT_MAP[tweaks.accent] || ACCENT_MAP.copper;
+  const b = BG_MAP[tweaks.bg] || BG_MAP.night;
+  const root = document.documentElement.style;
+  root.setProperty("--accent", a.accent);
+  root.setProperty("--accent-glow", a.glow);
+  root.setProperty("--bg", b.bg);
+  root.setProperty("--ink", b.ink);
+  root.setProperty("--ink-dim", b.dim);
+  root.setProperty("--ink-mute", b.mute);
+  root.setProperty("--line", b.line);
+  root.setProperty("--grain-opacity", tweaks.grain);
+  // company section bg
+  document.querySelectorAll(".company").forEach(el => el.style.background = b.co);
+  // update swatch active states
+  document.querySelectorAll("#sw-accent .tweak-sw").forEach(el => {
+    el.classList.toggle("active", el.dataset.val === tweaks.accent);
+  });
+  document.querySelectorAll("#sw-bg .tweak-sw").forEach(el => {
+    el.classList.toggle("active", el.dataset.val === tweaks.bg);
+  });
+  const grainEl = document.getElementById("grain");
+  if (grainEl) grainEl.value = tweaks.grain;
+  const gvEl = document.getElementById("grain-val");
+  if (gvEl) gvEl.textContent = Number(tweaks.grain).toFixed(3);
+}
+
+function persist(edits) {
+  tweaks = { ...tweaks, ...edits };
+  applyTweaks();
+  try {
+    window.parent.postMessage({ type: "__edit_mode_set_keys", edits }, "*");
+  } catch(e) {}
+}
+
+/* tweak UI */
+document.querySelectorAll("#sw-accent .tweak-sw").forEach(el => {
+  el.addEventListener("click", () => persist({ accent: el.dataset.val }));
+});
+document.querySelectorAll("#sw-bg .tweak-sw").forEach(el => {
+  el.addEventListener("click", () => persist({ bg: el.dataset.val }));
+});
+document.getElementById("grain").addEventListener("input", e => {
+  persist({ grain: parseFloat(e.target.value) });
+});
+
+/* edit-mode protocol */
+window.addEventListener("message", (e) => {
+  if (!e.data || !e.data.type) return;
+  if (e.data.type === "__activate_edit_mode") {
+    document.getElementById("tweaks").classList.add("on");
+  } else if (e.data.type === "__deactivate_edit_mode") {
+    document.getElementById("tweaks").classList.remove("on");
+  }
+});
+try {
+  window.parent.postMessage({ type: "__edit_mode_available" }, "*");
+} catch(e) {}
+
+applyTweaks();
+
+/* reveal on scroll */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      en.target.classList.add("in");
+      io.unobserve(en.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+/* smooth scroll */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener("click", e => {
+    const id = a.getAttribute("href");
+    if (id.length < 2) return;
+    const t = document.querySelector(id);
+    if (t) {
+      e.preventDefault();
+      window.scrollTo({ top: t.offsetTop - 40, behavior: "smooth" });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
