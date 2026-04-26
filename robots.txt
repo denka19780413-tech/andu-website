@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://andu-website-ego.pages.dev/sitemap.xml
